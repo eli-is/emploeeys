@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: employees-backend
+spec:
+  selector:
+    app: employees-backend
+  ports:
+    - name: backend
+      port: 8080
+      targetPort: 4000
+  type: NodePort
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: employees-frontend
+spec:
+  selector:
+    app: employees-frontend
+  ports:
+    - name: frontend
+      port: 8080
+      targetPort: 3000
+  type: NodePort
+

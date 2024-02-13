@@ -1,0 +1,66 @@
+# B"H
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: employees-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: employees-backend
+  template:
+    metadata:
+      labels:
+        app: employees-backend
+    spec:
+      containers:
+        - name: backend
+          image: eli7890/employees:backend-v0.0.1
+          env:
+          - name: MONGO_URL
+            value: "mongodb://mongo:27017/employees"
+          ports:
+            - containerPort: 4000  # Adjusted to backend port 4000
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: employees-mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: employees-mongo
+  template:
+    metadata:
+      labels:
+        app: employees-mongo
+    spec:
+      containers:
+        - name: mongo
+          image: mongo:latest
+          ports:
+            - containerPort: 27017
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: employees-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: employees-frontend
+  template:
+    metadata:
+      labels:
+        app: employees-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: eli7890/employees:frontend-v0.0.1
+          ports:
+            - containerPort: 3000
+

@@ -1,0 +1,40 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: employees-ingress
+  labels:
+    app: employees
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: fe.app.eisinfo.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: employees-frontend
+            port:
+              number: 8080
+  - host: eisinfo.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: employees-frontend
+            port:
+              number: 8080
+  - host: be.app.eisinfo.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: employees-backend
+            port:
+              number: 8080
+

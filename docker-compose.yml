@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - '27017:27017'
+    networks:
+      - pro
+
+  backend:
+    image: eli7890/employees-backend:v0.0.3
+    build:
+      context: ./employees_backend
+      dockerfile: Dockerfile
+    env_file:
+      - employees_backend/.env
+    ports:
+      - '4000:4000'
+    networks:
+      - pro
+      
+
+  frontend:
+    image: eli7890/employees-frontend:v0.0.3
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    networks:
+      - pro
+
+networks:
+  pro:
+    driver: bridge
+
